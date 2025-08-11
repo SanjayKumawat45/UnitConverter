@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -63,12 +65,41 @@ fun UnitConverter(){
                     Text("Select")
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "")
                 }
+                DropdownMenu(expanded = false, onDismissRequest = {}) {
+                    DropdownMenuItem(
+                        text = {Text("CM")},
+                        onClick = {}
+                    )
+                    DropdownMenuItem(
+                        text = {Text("Meters")},
+                        onClick = {}
+                    )
+                    DropdownMenuItem(
+                        text = {Text("Feet")},
+                        onClick = {}
+                    )
+                }
             }
             Box {
                 Button(onClick = {}) {
                     Text("Select")
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "")
                 }
+            }
+            DropdownMenu(expanded = false, onDismissRequest = {}) {
+                DropdownMenuItem(
+                    text = {Text("Meter")},
+                    onClick = {}
+                )
+                DropdownMenuItem(
+                    text = {Text("Meter")},
+                    onClick = {}
+                )
+                DropdownMenuItem(
+                    text = {Text("Meter")},
+                    onClick = {}
+                )
+
             }
 
 
