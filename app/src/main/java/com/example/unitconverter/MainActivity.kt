@@ -73,21 +73,20 @@ fun UnitConverter(){
     }
 
 
-
-
-
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Unit Converter")
+        Text("Unit Converter", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = inputValue,
             onValueChange = {
-            inputValue = it},
-            label = {Text("Enter Value")}
+            inputValue = it
+                convertUnit()},
+            label = {Text("Enter Value")},
+
             )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -156,7 +155,7 @@ fun UnitConverter(){
                         onClick = {
                             oExpanded = false
                             outoutUnit = "CM"
-                            conversionFactor.value = 0.01
+                            oConversionFactor.value = 0.01
                             convertUnit()
 
                         }
@@ -166,7 +165,7 @@ fun UnitConverter(){
                         onClick = {
                             oExpanded = false
                             outoutUnit = "Meter"
-                            conversionFactor.value = 1.00
+                            oConversionFactor.value = 1.00
                             convertUnit()
                         }
                     )
@@ -175,7 +174,7 @@ fun UnitConverter(){
                         onClick = {
                             oExpanded = false
                             outoutUnit = "Feet"
-                            conversionFactor.value = 0.3048
+                            oConversionFactor.value = 0.3048
                             convertUnit()
                         }
                     )
@@ -184,7 +183,7 @@ fun UnitConverter(){
                         onClick = {
                             oExpanded = false
                             outoutUnit = "Milimeter"
-                            conversionFactor.value = 0.001
+                            oConversionFactor.value = 0.001
                             convertUnit()
                         }
                     )
@@ -214,7 +213,7 @@ fun UnitConverter(){
         Spacer(modifier = Modifier.height(16.dp))
         // Result Text
         Text("Result: $outputValue $outoutUnit",
-            style = MaterialTheme.typography.headlineMedium
+
         )
     }
 
