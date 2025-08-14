@@ -11,12 +11,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -54,7 +58,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun UnitConverter(){
+fun UnitConverter() {
 
     var inputValue by remember { mutableStateOf("") }
     var outputValue by remember { mutableStateOf("") }
@@ -66,136 +70,144 @@ fun UnitConverter(){
     val oConversionFactor = remember { mutableStateOf(1.00) }
 
 
-    fun convertUnit(){
+    fun convertUnit() {
         val inputValueDouble = inputValue.toDoubleOrNull() ?: 0.0
-        val result = (inputValueDouble * conversionFactor.value * 100.0 / oConversionFactor.value).roundToInt()/100.0
-        outputValue =  result.toString()
+        val result =
+            (inputValueDouble * conversionFactor.value * 100.0 / oConversionFactor.value).roundToInt() / 100.0
+        outputValue = result.toString()
     }
 
-
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    Card(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
     ) {
-        Text("Unit Converter", style = MaterialTheme.typography.headlineMedium)
-        Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(
-            value = inputValue,
-            onValueChange = {
-            inputValue = it
-                convertUnit()},
-            label = {Text("Enter Value")},
-
-            )
-        Spacer(modifier = Modifier.height(16.dp))
 
 
-        Row {
-            //Input
-            Box {
-                Button(onClick = {iExpanded = true}) {
-                    Text(inputUnit)
-                    Icon(Icons.Default.ArrowDropDown, contentDescription = "")
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("Unit Converter", style = MaterialTheme.typography.headlineMedium)
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextField(
+                value = inputValue,
+                onValueChange = {
+                    inputValue = it
+                    convertUnit()
+                },
+                label = { Text("Enter Value") },
+
+                )
+            Spacer(modifier = Modifier.height(16.dp))
+
+
+            Row {
+                //Input
+                Box {
+                    Button(onClick = { iExpanded = true }) {
+                        Text(inputUnit)
+                        Icon(Icons.Default.ArrowDropDown, contentDescription = "")
+                    }
+                    DropdownMenu(expanded = iExpanded, onDismissRequest = { iExpanded = false }) {
+                        DropdownMenuItem(
+                            text = { Text("CM") },
+                            onClick = {
+                                iExpanded = false
+                                inputUnit = "CM"
+                                conversionFactor.value = 0.01
+                                convertUnit()
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Meters") },
+                            onClick = {
+                                iExpanded = false
+                                inputUnit = "Meters"
+                                conversionFactor.value = 1.0
+                                convertUnit()
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Feet") },
+                            onClick = {
+                                iExpanded = false
+                                inputUnit = "Feet"
+                                conversionFactor.value = 0.3048
+                                convertUnit()
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Milimeters") },
+                            onClick = {
+                                iExpanded = false
+                                inputUnit = "Milimeters"
+                                conversionFactor.value = 0.001
+                                convertUnit()
+                            }
+                        )
+                    }
                 }
-                DropdownMenu(expanded = iExpanded, onDismissRequest = {iExpanded = false}) {
-                    DropdownMenuItem(
-                        text = {Text("CM")},
-                        onClick = {
-                            iExpanded = false
-                            inputUnit = "CM"
-                            conversionFactor.value = 0.01
-                            convertUnit()
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = {Text("Meters")},
-                        onClick = {
-                            iExpanded = false
-                            inputUnit = "Meters"
-                            conversionFactor.value = 1.0
-                            convertUnit()
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = {Text("Feet")},
-                        onClick = {
-                            iExpanded = false
-                            inputUnit = "Feet"
-                            conversionFactor.value = 0.3048
-                            convertUnit()
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = {Text("Milimeters")},
-                        onClick = {
-                            iExpanded = false
-                            inputUnit = "Milimeters"
-                            conversionFactor.value = 0.001
-                            convertUnit()
-                        }
-                    )
+                Spacer(modifier = Modifier.width(16.dp))
+                Box {
+                    //output
+                    Button(onClick = {
+                        oExpanded = true
+                    }) {
+                        Text(outoutUnit)
+                        Icon(Icons.Default.ArrowDropDown, contentDescription = "")
+                    }
+
+                    DropdownMenu(expanded = oExpanded, onDismissRequest = {
+                        oExpanded = false
+                    }) {
+                        DropdownMenuItem(
+                            text = { Text("CM") },
+                            onClick = {
+                                oExpanded = false
+                                outoutUnit = "CM"
+                                oConversionFactor.value = 0.01
+                                convertUnit()
+
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Meter") },
+                            onClick = {
+                                oExpanded = false
+                                outoutUnit = "Meter"
+                                oConversionFactor.value = 1.00
+                                convertUnit()
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Feet") },
+                            onClick = {
+                                oExpanded = false
+                                outoutUnit = "Feet"
+                                oConversionFactor.value = 0.3048
+                                convertUnit()
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Milimeter") },
+                            onClick = {
+                                oExpanded = false
+                                outoutUnit = "Milimeter"
+                                oConversionFactor.value = 0.001
+                                convertUnit()
+                            }
+                        )
+
+
+                    }
                 }
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            Box {
-                //output
-                Button(onClick = {
-                    oExpanded = true
-                }) {
-                    Text(outoutUnit)
-                    Icon(Icons.Default.ArrowDropDown, contentDescription = "")
-                }
-
-                DropdownMenu(expanded = oExpanded, onDismissRequest = {
-                    oExpanded = false
-                }) {
-                    DropdownMenuItem(
-                        text = { Text("CM") },
-                        onClick = {
-                            oExpanded = false
-                            outoutUnit = "CM"
-                            oConversionFactor.value = 0.01
-                            convertUnit()
-
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Meter") },
-                        onClick = {
-                            oExpanded = false
-                            outoutUnit = "Meter"
-                            oConversionFactor.value = 1.00
-                            convertUnit()
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Feet") },
-                        onClick = {
-                            oExpanded = false
-                            outoutUnit = "Feet"
-                            oConversionFactor.value = 0.3048
-                            convertUnit()
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Milimeter") },
-                        onClick = {
-                            oExpanded = false
-                            outoutUnit = "Milimeter"
-                            oConversionFactor.value = 0.001
-                            convertUnit()
-                        }
-                    )
-
-
-                }
-            }
-
-
-
-
-
 
 
 //            val context = LocalContext.current
@@ -209,16 +221,17 @@ fun UnitConverter(){
 ////                Text("Click me")
 ////            }
 
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            // Result Text
+            Text(
+                "Result: $outputValue $outoutUnit",
+
+                )
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        // Result Text
-        Text("Result: $outputValue $outoutUnit",
 
-        )
     }
-
 }
-
 @Preview
 @Composable
 fun UnitConverterPreview(){
